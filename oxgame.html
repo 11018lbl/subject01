@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>三目並べ</title>
+</head>
+
+<body>
+<h1>三目並べ</h1>
+
+<!--描写エリアの設定-->
+<canvas id="canvas"></canvas>
+
+	<script>
+
+	let canvas = document.getElementById('canvas');
+	let ctx = canvas.getContext('2d');
+
+	<!--canvasのサイズ指定-->
+
+	canvas.width = 400;
+	canvas.height = 400;
+
+	<!--変数の宣言-->
+	let w = 300, h = 300;
+	let x0 = 50, y0 = 50;
+
+	<!--大枠の描写-->
+	ctx.strokeRect(x0,y0,w,h);
+
+	ctx.beginPath();
+	ctx.moveTo(150, 50);
+	ctx.lineTo(150,350);
+	ctx.moveTo(250, 50);
+	ctx.lineTo(250,350);
+	ctx.moveTo(50, 150);
+	ctx.lineTo(350,150);
+	ctx.moveTo(50, 250);
+	ctx.lineTo(350,250);
+	ctx.stroke();
+
+	function onClick(e) {
+	    let rect = e.target.getBoundingClientRect();
+	    x = e.clientX - rect.left;
+	    y = e.clientY - rect.top;
+
+//クリックされた座標からマス目を指定する
+		switch (true) {
+			case 50<x<150:
+				x = 100;
+				break;
+
+			case 150<x<250:
+				x = 200;
+				break;
+
+			case 250<x<350:
+				x = 300;
+				break;
+			default:
+			turn = turn*-1
+
+		}
+
+		if(x > 0){
+		if(turn % 2 == 0){
+		//偶数なら白丸
+		ctx.beginPath();
+		ctx.arc(x, y, 40, 0, 2 * Math.PI, false);
+		ctx.stroke();
+	}else{
+		//奇数なら黒丸
+		ctx.beginPath();
+		ctx.arc(x, y, 40, 0, 2 * Math.PI, false);
+		ctx.fill();
+	}
+}else{
+	x=x*-1-1;
+}
+
+		turn = turn + 1 ;
+	}
+
+	//ターンの宣言
+	let turn = 1;
+	canvas.addEventListener('click', onClick, false);
+
+	</script>
+
+</body>
+</html>
